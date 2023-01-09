@@ -9,6 +9,8 @@ top = """<!DOCTYPE html>
 </head>
 <body onload="checkTime()">\n"""
 
+no_bd = '<h1>There is no birthday today.</h1>\n'
+
 name = '<h1>{firstname}, {lastname} ({gender})</h1>\n'
 
 birthdate = '<h2>Birthdate: {birthdate}</h2>\n'

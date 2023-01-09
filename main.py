@@ -56,13 +56,17 @@ class App():
         title = 'Birthday'
         with open('birthday.html', 'w') as file:
             file.write(templates.top.format(title=title))
-            for person in persons:
-                file.write(templates.name.format(firstname=person['firstname'], lastname=person['lastname'], gender=person['gender']))
-                file.write(templates.birthdate.format(birthdate=person['birthdate']))
-                if 'image' in person:
-                    file.write(templates.image.format(source=person['image']))
-                if 'video' in person:
-                    file.write(templates.video.format(source=person['video']))
+            # check if there is a birthday
+            if persons:
+                for person in persons:
+                    file.write(templates.name.format(firstname=person['firstname'], lastname=person['lastname'], gender=person['gender']))
+                    file.write(templates.birthdate.format(birthdate=person['birthdate']))
+                    if 'image' in person:
+                        file.write(templates.image.format(source=person['image']))
+                    if 'video' in person:
+                        file.write(templates.video.format(source=person['video']))
+            else:
+                file.write(templates.no_bd)
             file.write(templates.bottom)
 
     def run(self):
@@ -78,5 +82,6 @@ class App():
                 self.open_web()
             time.sleep(60)
 
-    if __name__ == '__main__':
-        run()
+if __name__ == '__main__':
+    app = App()
+    app.run()
