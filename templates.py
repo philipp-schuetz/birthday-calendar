@@ -7,7 +7,7 @@ top = """<!DOCTYPE html>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{title}</title>
 </head>
-<body>\n"""
+<body onload="checkTime()">\n"""
 
 name = '<h1>{firstname}, {lastname} ({gender})</h1>\n'
 
@@ -20,4 +20,14 @@ video = """<video controls>
 </video>\n"""
 
 bottom = """</body>
+<script>
+  function checkTime(){
+    const today = new Date();
+    // reload page at 00:05
+    if (today.getHours() == 0 && today.getMinutes() == 5){
+      location.reload()
+    }
+    setTimeout(checkTime, 1000);
+  }
+</script>
 </html>"""
