@@ -6,7 +6,6 @@ from datetime import datetime
 import time
 from typing import List
 
-# TODO: only days and months of the dates
 # TODO: check if files (savefile, image) exist in folder
 
 class App():
@@ -20,11 +19,13 @@ class App():
     def read_file(self) -> List[list]:
         """read data from file, remove unnecessary characters and convert to 2d list"""
         persons = []
-        with open('input.csv', 'r') as file:
+        with open('input_2.csv', 'r') as file:
             for line in file:
                 line = line.strip().strip(',')
                 tmp = line.split(',')
-                if tmp[2] == self.current_date:
+                self.validate_date(tmp[2])
+                self.validate_gender(tmp[3])
+                if tmp[2][:5] == date.today().strftime('%d.%m'):
                     persons.append(tmp)
         return persons
 
@@ -52,11 +53,8 @@ class App():
             tmp_dict = {}
             tmp_dict['firstname'] = person[1]
             tmp_dict['lastname'] = person[0]
-            print(person[3])
-            if self.validate_gender(person[3]):
-                tmp_dict['gender'] = person[3]
-            if self.validate_date(person[2]):
-                tmp_dict['birthdate'] = person[2]
+            tmp_dict['gender'] = person[3]
+            tmp_dict['birthdate'] = person[2]
 
             if len(person) > 4:
                 if person[4].endswith('.mp4'):
