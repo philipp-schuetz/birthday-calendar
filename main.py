@@ -18,23 +18,23 @@ class App():
 
     def read_file(self) -> List[list]:
         persons = []
-        with open('input.csv', 'r') as file:
+        with open('input_2.csv', 'r') as file:
             for line in file:
+                line = line.strip().strip(',')
+
                 tmp = line.split(',')
-                if ' \n' in tmp:
-                    tmp.remove(' \n')
                 if tmp[2] == self.current_date:
                     persons.append(tmp)
         return persons
 
-    def validate_date(date:str):
+    def validate_date(self, date:str):
         try:
             datetime.strptime(date, '%d.%m.%Y')
         except ValueError:
             raise ValueError('date should be formatted like dd.mm.yyyy')
         return True
   
-    def validate_gender(gender:str):
+    def validate_gender(self, gender:str):
         """checks if gender is one of the three allowed"""
         genders = ['m','w','n']
         if gender in genders:
@@ -42,7 +42,7 @@ class App():
         else:
             raise ValueError('gender should be m, w, or n')
 
-    def validate_video(video:str):
+    def validate_video(self, video:str):
         """checks if video has format mp4"""
         if video.endswith('.mp4'):
             return True
@@ -56,6 +56,7 @@ class App():
             tmp_dict = {}
             tmp_dict['firstname'] = person[1]
             tmp_dict['lastname'] = person[0]
+            print(person[3])
             if self.validate_gender(person[3]):
                 tmp_dict['gender'] = person[3]
             if self.validate_date(person[2]):
@@ -65,7 +66,7 @@ class App():
                 if person[4].endswith('.mp4'):
                     tmp_dict['video'] = person[4]
                 else:
-                    if self.validate_video(person[4]):
+                    if person[4].endswith('.png'): # TODO: validate img method
                         tmp_dict['image'] = person[4]
             if len(person) > 5:
                 tmp_dict['video'] = person[5]
@@ -82,14 +83,18 @@ class App():
             # check if there is a birthday
             if persons:
                 for person in persons:
+                    file.write(templates.person_open)
                     file.write(templates.name.format(firstname=person['firstname'], lastname=person['lastname'], gender=person['gender']))
                     file.write(templates.birthdate.format(birthdate=person['birthdate']))
                     if 'image' in person:
                         file.write(templates.image.format(source=person['image']))
                     if 'video' in person:
                         file.write(templates.video.format(source=person['video']))
+                    file.write(templates.person_close)
             else:
+                file.write(templates.person_open)
                 file.write(templates.no_bd)
+                file.write(templates.person_close)
             file.write(templates.bottom)
 
     def run(self):
