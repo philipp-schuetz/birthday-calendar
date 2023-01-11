@@ -6,7 +6,6 @@ from datetime import datetime
 import time
 from typing import List
 
-# TODO: check if files (savefile, image) exist in folder
 
 class App():
     def __init__(self) -> None:
@@ -44,6 +43,13 @@ class App():
             return True
         else:
             raise ValueError('gender should be m, w, or n')
+    
+    def file_validation(self, filename):
+        """return True if the file exist, otherwise raise exception"""
+        if os.path.isfile(filename):
+            return True
+        else:
+            raise ValueError(f'file "{filename}" does not exist')
 
     def prepare(self, persons: List[list]) -> List[dict]:
         """prepare data for displaying"""
@@ -57,12 +63,15 @@ class App():
             tmp_dict['birthdate'] = person[2]
 
             if len(person) > 4:
+                self.file_validation(person[4])
                 if person[4].endswith('.mp4'):
+                    # check if video file exists
                     tmp_dict['video'] = person[4]
                 else:
                     if person[4].endswith('.png'):
                         tmp_dict['image'] = person[4]
             if len(person) > 5:
+                self.file_validation(person[5])
                 tmp_dict['video'] = person[5]
             
             return_list.append(tmp_dict)
