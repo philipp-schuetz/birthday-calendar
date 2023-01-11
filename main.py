@@ -1,13 +1,14 @@
 import webbrowser
 import os
-import templates
 from datetime import date
 from datetime import datetime
 import time
 from typing import List
+import templates
 
 
 class App():
+    """app class contains all methods needed for execution"""
     def __init__(self) -> None:
         self.current_date = date.today().strftime('%d.%m.%Y')
 
@@ -28,27 +29,22 @@ class App():
                     persons.append(tmp)
         return persons
 
-    def validate_date(self, date:str):
+    def validate_date(self, validateable_date:str):
         """validate datestring from input file"""
         try:
-            datetime.strptime(date, '%d.%m.%Y')
+            datetime.strptime(validateable_date, '%d.%m.%Y')
         except ValueError:
             raise ValueError('date should be formatted like dd.mm.yyyy')
-        return True
-  
+
     def validate_gender(self, gender:str):
         """checks if gender is one of the three allowed"""
         genders = ['m','w','n']
-        if gender in genders:
-            return True
-        else:
+        if gender not in genders:
             raise ValueError('gender should be m, w, or n')
-    
+
     def file_validation(self, filename):
         """return True if the file exist, otherwise raise exception"""
-        if os.path.isfile(filename):
-            return True
-        else:
+        if not os.path.isfile(filename):
             raise ValueError(f'file "{filename}" does not exist')
 
     def prepare(self, persons: List[list]) -> List[dict]:
@@ -73,9 +69,9 @@ class App():
             if len(person) > 5:
                 self.file_validation(person[5])
                 tmp_dict['video'] = person[5]
-            
+
             return_list.append(tmp_dict)
-        
+
         return return_list
 
     def generate_page(self, persons: List[dict]):
@@ -88,7 +84,9 @@ class App():
             if persons:
                 for person in persons:
                     file.write(templates.person_open)
-                    file.write(templates.name.format(firstname=person['firstname'], lastname=person['lastname'], gender=person['gender']))
+                    file.write(templates.name.format(firstname=person['firstname'],
+                                                    lastname=person['lastname'],
+                                                    gender=person['gender']))
                     file.write(templates.birthdate.format(birthdate=person['birthdate']))
                     if 'image' in person:
                         file.write(templates.image.format(source=person['image']))
