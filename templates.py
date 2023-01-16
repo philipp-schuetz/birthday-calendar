@@ -8,7 +8,7 @@ top = """<!DOCTYPE html>
     <link rel="stylesheet" type="text/css" href="style.css" />
     <title>{title}</title>
 </head>
-<body onload="checkTime()">\n"""
+<body onload='checkTime();autoplay();'>\n"""
 
 person_open = '<div class="person">'
 
@@ -20,7 +20,7 @@ birthdate = '<h2>Birthdate: {birthdate}</h2>\n'
 
 image = '<img src="{source}">\n'
 
-video = """<video controls>
+video = """<video id="video" loop autoplay muted>
   <source src="{source}" type="video/mp4">
 </video>\n"""
 
@@ -35,6 +35,9 @@ bottom = """</body>
       location.reload()
     }
     setTimeout(checkTime, 1000);
+  }
+  function autoplay(){
+    document.getElementById("video").play();
   }
 </script>
 </html>"""
