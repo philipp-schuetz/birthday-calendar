@@ -19,7 +19,7 @@ class App():
     def read_file(self) -> List[list]:
         """read data from file, remove unnecessary characters and convert to 2d list"""
         persons = []
-        with open('input_2.csv', 'r') as file:
+        with open('input.csv', 'r') as file:
             for line in file:
                 line = line.strip().strip(',')
                 tmp = line.split(',')
