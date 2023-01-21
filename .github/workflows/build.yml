@@ -21,7 +21,7 @@ jobs:
         run: |
           git config --global user.name 'Philipp Schütz'
           git config --global user.email ${{ secrets.GH_MAIL }}
-          git add dist/main
+          git add dist/main.exe
           git commit -m "Add Windows executable"
           git push
 
