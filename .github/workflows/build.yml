@@ -15,7 +15,7 @@ jobs:
           architecture: 'x64'
       - run: pip install pyinstaller
 
-      - run: pyinstaller -F main.py
+      - run: pyinstaller --noconsole -F main.py
 
       - name: Commit build
         run: |
@@ -39,7 +39,7 @@ jobs:
           architecture: 'x64'
       - run: pip install pyinstaller
 
-      - run: pyinstaller -F main.py
+      - run: pyinstaller --noconsole -F main.py
 
       - name: Commit build
         run: |
