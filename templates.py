@@ -5,10 +5,11 @@ top = """<!DOCTYPE html>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="60">
     <link rel="stylesheet" type="text/css" href="style.css" />
     <title>{title}</title>
 </head>
-<body onload='checkTime();autoplay();'>\n"""
+<body onload='autoplay();'>\n"""
 
 person_open = '<div class="person">'
 
@@ -28,14 +29,6 @@ person_close = '</div>'
 
 bottom = """</body>
 <script>
-  function checkTime(){
-    const today = new Date();
-    // reload page at 00:05
-    if (today.getHours() == 0 && today.getMinutes() == 5){
-      location.reload()
-    }
-    setTimeout(checkTime, 1000);
-  }
   function autoplay(){
     document.getElementById("video").play();
   }
