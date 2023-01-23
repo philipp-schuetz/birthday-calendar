@@ -18,3 +18,13 @@
 
 - copy the executable for your system (supported are Windows and MacOS) into the root of this project
 - run the executable instead of main.py
+
+## start this app on login
+
+### windows
+
+- copy the main.exe from the dist folder to the project root
+- create a task in the windows task scheduler
+  - set the task to execute on startup
+  - add main.exe as program to execute
+  - set the working directory to the project root
