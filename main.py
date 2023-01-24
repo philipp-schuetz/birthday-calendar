@@ -11,6 +11,7 @@ class App():
     """app class contains all methods needed for execution"""
     def __init__(self) -> None:
         self.current_date = date.today().strftime('%d.%m.%Y')
+        self.allowed_image_types = ['.png', '.jpg', 'jpeg']
 
     def open_web(self):
         """open overview todays birthdays in browser"""
@@ -64,8 +65,9 @@ class App():
                     # check if video file exists
                     tmp_dict['video'] = person[4]
                 else:
-                    if person[4].endswith('.png'):
-                        tmp_dict['image'] = person[4]
+                    for ending in self.allowed_image_types:
+                        if person[4].endswith(ending):
+                            tmp_dict['image'] = person[4]
             if len(person) > 5:
                 self.file_validation(person[5])
                 tmp_dict['video'] = person[5]
