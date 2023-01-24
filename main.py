@@ -20,7 +20,7 @@ class App():
     def read_file(self) -> List[list]:
         """read data from file, remove unnecessary characters and convert to 2d list"""
         persons = []
-        with open('input.csv', 'r') as file:
+        with open('input.csv', 'r', encoding='UTF-8') as file:
             for line in file:
                 line = line.strip().strip(',')
                 tmp = line.split(',')
@@ -80,7 +80,7 @@ class App():
         """generate web page for displaying birthdays"""
         title = 'Birthday'
         # write modified templates to html file
-        with open('birthday.html', 'w') as file:
+        with open('birthday.html', 'w', encoding='UTF-8') as file:
             file.write(templates.top.format(title=title))
             # check if there is a birthday
             if persons:
