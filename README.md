@@ -9,7 +9,7 @@
 
 ## input data
 
-- input data must be in a .csv file formatted like example.csv at the root of the project
+- input data must be in a .csv file, formatted like example.csv, at the root of the project and named input.csv
 - videos can only be in .mp4 format, sound is muted on execution to use autoplay
 - image files can have the .png, .jpg or .jpeg extension
 - files referenced in the input file must be at the root of the project
