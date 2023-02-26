@@ -5,7 +5,7 @@ from datetime import datetime
 import time
 from typing import List
 import templates
-
+import pyautogui
 
 class App():
     """app class contains all methods needed for execution"""
@@ -16,6 +16,8 @@ class App():
     def open_web(self):
         """open overview todays birthdays in browser"""
         webbrowser.open('file://' + os.path.realpath('birthday.html'))
+        # TODO f11? shift+command+F
+        pyautogui.press('')
 
     def read_file(self) -> List[list]:
         """read data from file, remove unnecessary characters and convert to 2d list"""
@@ -68,6 +70,7 @@ class App():
                     for ending in self.allowed_image_types:
                         if person[4].endswith(ending):
                             tmp_dict['image'] = person[4]
+                            break
             if len(person) > 5:
                 self.file_validation(person[5])
                 tmp_dict['video'] = person[5]
@@ -113,7 +116,6 @@ class App():
                 self.current_date = tmp
                 # generate page on new date
                 self.generate_page(self.prepare(self.read_file()))
-                self.open_web()
             #wait 1 minute
             time.sleep(60)
 
