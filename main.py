@@ -5,8 +5,6 @@ from datetime import datetime
 import time
 from typing import List
 import templates
-import pyautogui
-from sys import platform
 
 
 class App():
@@ -18,11 +16,6 @@ class App():
     def open_web(self):
         """open overview todays birthdays in browser"""
         webbrowser.open('file://' + os.path.realpath('birthday.html'))
-
-        time.sleep(1)
-        
-        if platform == "win32":
-            pyautogui.press('f11')
 
     def read_file(self) -> List[list]:
         """read data from file, remove unnecessary characters and convert to 2d list"""
