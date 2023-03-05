@@ -5,6 +5,7 @@ from datetime import datetime
 import time
 from typing import List
 import templates
+import logging
 
 
 class App():
@@ -13,9 +14,13 @@ class App():
         self.current_date = date.today().strftime('%d.%m.%Y')
         self.allowed_image_types = ['.png', '.jpg', 'jpeg']
 
+        # set up logging
+        logging.basicConfig(filename='birthday-log.log', format='%(asctime)s : %(levelname)s : %(message)s', datefmt='%d/%m/%Y %I:%M:%S', encoding='utf-8', level=logging.INFO)
+
     def open_web(self):
         """open overview todays birthdays in browser"""
         webbrowser.open('file://' + os.path.realpath('birthday.html'))
+        logging.info('opened "birthday.html" in browser')
 
     def read_file(self) -> List[list]:
         """read data from file, remove unnecessary characters and convert to 2d list"""
@@ -35,17 +40,20 @@ class App():
         try:
             datetime.strptime(validateable_date, '%d.%m.%Y')
         except ValueError:
+            logging.error('date should be formatted like dd.mm.yyyy')
             raise ValueError('date should be formatted like dd.mm.yyyy')
 
     def validate_gender(self, gender:str):
         """checks if gender is one of the three allowed"""
         genders = ['m','w','n']
         if gender not in genders:
+            logging.error('gender should be m, w, or n')
             raise ValueError('gender should be m, w, or n')
 
     def file_validation(self, filename):
         """return True if the file exist, otherwise raise exception"""
         if not os.path.isfile(filename):
+            logging.error(f'file "{filename}" does not exist')
             raise ValueError(f'file "{filename}" does not exist')
 
     def prepare(self, persons: List[list]) -> List[dict]:
@@ -102,6 +110,8 @@ class App():
                 file.write(templates.no_bd)
                 file.write(templates.person_close)
             file.write(templates.bottom)
+        
+        logging.info('"birthday.html" was generated')
 
     def run(self):
         """run function of the project"""
