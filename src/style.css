@@ -1,4 +1,4 @@
-@import 'normalize.css';
+@import 'src/normalize.css';
 
 :root {
 	--black: rgb(18, 18, 18);
