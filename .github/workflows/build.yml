@@ -1,5 +1,8 @@
-name: build
-on: [push]
+name: build executables
+on:
+  push:
+    branches:
+      - main
 
 jobs:
   windows-build:
@@ -15,16 +18,13 @@ jobs:
           architecture: 'x64'
       - run: pip install pyinstaller
 
-      - run: pyinstaller --noconsole -F main.py
-
-      - name: Commit build
+      - name: Build Package
         run: |
-          git config --global user.name 'Philipp Schütz'
-          git config --global user.email ${{ secrets.GH_MAIL }}
-          git pull
-          git add dist/main.exe
-          git commit -m "Add Windows executable"
-          git push
+          pyinstaller src/main.py --name birthday-calendar --onefile --clean --noconsole
+
+      - name: Archive Package
+        run: |
+          Compress-Archive -Path ./dist -DestinationPath "birthday-calendar_windows.zip"
 
   macos-build:
     name: Build executable for MacOS
@@ -39,13 +39,10 @@ jobs:
           architecture: 'x64'
       - run: pip install pyinstaller
 
-      - run: pyinstaller --noconsole -F main.py
-
-      - name: Commit build
+      - name: Build Package
         run: |
-          git config --global user.name 'Philipp Schütz'
-          git config --global user.email ${{ secrets.GH_MAIL }}
-          git pull
-          git add dist/main
-          git commit -m "Add MacOS executable"
-          git push
+          pyinstaller src/main.py --name birthday-calendar --onefile --clean --noconsole
+
+      - name: Archive Package
+        run: |
+          Compress-Archive -Path ./dist -DestinationPath "birthday-calendar_macos.zip"
