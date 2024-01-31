@@ -11,8 +11,8 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: '3.10'
           architecture: 'x64'
@@ -26,14 +26,20 @@ jobs:
         run: |
           Compress-Archive -Path ./dist -DestinationPath "birthday-calendar_windows.zip"
 
+      - name: Upload Package
+        uses: actions/upload-artifact@v4
+        with:
+          name: birthday-calendar_windows
+          path: "./birthday-calendar_windows.zip"
+
   macos-build:
     name: Build executable for MacOS
 
     runs-on: macos-latest
 
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: '3.10'
           architecture: 'x64'
@@ -45,4 +51,10 @@ jobs:
 
       - name: Archive Package
         run: |
-          Compress-Archive -Path ./dist -DestinationPath "birthday-calendar_macos.zip"
+          zip -r "birthday-calendar_macos.zip" ./dist
+
+      - name: Upload Package
+        uses: actions/upload-artifact@v4
+        with:
+          name: birthday-calendar_macos
+          path: "./birthday-calendar_macos.zip"
