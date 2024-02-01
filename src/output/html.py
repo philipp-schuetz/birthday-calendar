@@ -5,8 +5,6 @@ import html_templates
 from src import custom_types as ct
 import os
 
-print(Path('test.txt'))
-
 
 class HtmlOutput:
     def __init__(self, data: list[ct.Person]):
