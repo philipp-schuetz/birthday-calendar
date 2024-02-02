@@ -9,25 +9,22 @@ import os
 class HtmlOutput:
     def __init__(self, data: list[ct.Person]):
         self.data = data
+        self.html_out_file = Path('birthday.html')
 
         css_path = Path('style.css')
         if not css_path.is_file():
             with open(css_path, 'w', encoding='UTF-8') as file:
                 file.write(html_css.css)
 
-    def run(self):
-        self.generate_page()
-        self.open_web()
-
     def open_web(self):
         """open overview today's birthdays in browser"""
-        webbrowser.open('file://' + os.path.realpath('birthday.html'))
+        webbrowser.open('file://' + os.path.realpath(self.html_out_file))
 
     def generate_page(self):
         """generate web page for displaying birthdays"""
         title = 'Birthday'
         # write modified templates to html file
-        with open('birthday.html', 'w', encoding='UTF-8') as file:
+        with open(self.html_out_file, 'w', encoding='UTF-8') as file:
             file.write(html_templates.top.format(title=title))
             # check if there is a birthday
             if self.data:
