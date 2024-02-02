@@ -2,7 +2,7 @@ import webbrowser
 from pathlib import Path
 import html_css
 import html_templates
-from src import custom_types as ct
+import custom_types as ct
 import os
 
 

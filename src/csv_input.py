@@ -1,4 +1,4 @@
-from src import custom_types as ct
+import custom_types as ct
 from pathlib import Path
 import utils
 import datetime as dt

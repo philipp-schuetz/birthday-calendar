@@ -1,5 +1,5 @@
-from input import input_handler
-from output import output_handler
+import input_handler
+import output_handler
 
 if __name__ == '__main__':
     while True:

@@ -1,5 +1,5 @@
 from html_output import HtmlOutput
-from src import custom_types as ct
+import custom_types as ct
 import datetime as dt
 import time
 

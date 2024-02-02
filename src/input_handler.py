@@ -1,5 +1,5 @@
 """modules receives an input method and a filename and returns input data if it exists"""
-from src import custom_types as ct
+import custom_types as ct
 from csv_input import CSVInput
 from pathlib import Path
 
