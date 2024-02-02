@@ -1,10 +1,15 @@
-"""modules receives an input method and a filename and returns the validated input data if it exists"""
+"""modules receives an input method and a filename and returns input data if it exists"""
+from src import custom_types as ct
+import csv_input
+from pathlib import Path
 
-# is it maybe possible to implement the different versions of input reading with oop interfaces,
-# what would be the most pythonic way to do this
-# oop is an interesting thing in general, when it comes to developing in python
-#
-# i it is possible for me to do this usig interfaces, I could to one definition and implement this for each input method
-# the input method/implementation to use is handled and managed by the input_handler.py
-# data validation is already with the person type
-# can I enforce data and throw errors, if there is no data?
+# TODO get configuration options from config file
+file_type = 'csv'
+input_file = Path('input.csv')
+
+
+def get_person_list() -> list[ct.Person]:
+    match file_type:
+        case 'csv':
+            csv = csv_input.CSVInput(input_file)
+            return csv.get_person_list()
