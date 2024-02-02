@@ -1,6 +1,7 @@
 """modules receives an input method and a filename and returns input data if it exists"""
 import custom_types as ct
 from csv_input import CSVInput
+from json_input import JsonInput
 from pathlib import Path
 
 # TODO get configuration options from config file
@@ -13,3 +14,6 @@ def get_person_list() -> list[ct.Person]:
         case 'csv':
             csv = CSVInput(input_file)
             return csv.get_person_list()
+        case 'json':
+            json = JsonInput(input_file)
+            return json.get_person_list()
