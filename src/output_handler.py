@@ -2,9 +2,9 @@ from html_output import HtmlOutput
 import custom_types as ct
 import datetime as dt
 import time
+from config import config
 
-# TODO get configuration options from config file
-output_type = 'html'
+output_type = config.get_output_method()
 
 
 def start_output(data: list[ct.Person]):
