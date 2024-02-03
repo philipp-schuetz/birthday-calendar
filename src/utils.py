@@ -1,4 +1,5 @@
 import datetime as dt
+from config import config
 
 
 def birthdate_today(birthdate: dt.date) -> bool:
@@ -10,16 +11,14 @@ def birthdate_today(birthdate: dt.date) -> bool:
 
 
 def is_video_name(name: str) -> bool:
-    allowed_extensions = ['mp4']  # TODO get values from config
-    for extension in allowed_extensions:
-        if name.endswith(extension):
+    for suffix in config.allowed_video_suffixes:
+        if name.endswith(suffix):
             return True
     return False
 
 
 def is_image_name(name: str) -> bool:
-    allowed_extensions = ['png', 'jpg', 'jpeg']  # TODO get values from config
-    for extension in allowed_extensions:
-        if name.endswith(extension):
+    for suffix in config.allowed_image_suffixes:
+        if name.endswith(suffix):
             return True
     return False

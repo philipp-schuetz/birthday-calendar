@@ -2,18 +2,16 @@
 import custom_types as ct
 from csv_input import CSVInput
 from json_input import JsonInput
-from pathlib import Path
+from config import config
 
-# TODO get configuration options from config file
-file_type = 'csv'
-input_file = Path('input.csv')
+input_file = config.get_input_file()
 
 
 def get_person_list() -> list[ct.Person]:
-    match file_type:
-        case 'csv':
+    match input_file.suffix:
+        case '.csv':
             csv = CSVInput(input_file)
             return csv.get_person_list()
-        case 'json':
+        case '.json':
             json = JsonInput(input_file)
             return json.get_person_list()

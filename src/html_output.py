@@ -4,6 +4,7 @@ import html_css
 import html_templates
 import custom_types as ct
 import os
+from config import config
 
 
 class HtmlOutput:
@@ -30,9 +31,12 @@ class HtmlOutput:
             if self.data:
                 for person in self.data:
                     file.write(html_templates.person_open)
-                    file.write(html_templates.name.format(firstname=person.get_firstname(),
-                                                          lastname=person.get_lastname(),
-                                                          gender=person.get_gender()))
+                    if config.get_lastname_only():
+                        file.write(html_templates.name.format(firstname=config.get_address_terms()[person.get_gender()],
+                                                              lastname=person.get_lastname()))
+                    else:
+                        file.write(html_templates.name.format(firstname=person.get_firstname(),
+                                                              lastname=person.get_lastname()))
                     file.write(html_templates.birthdate.format(birthdate=person.get_birthdate().strftime('%m.%d.%Y')))
                     if person.get_image():
                         file.write(html_templates.image.format(source=person.get_image()))

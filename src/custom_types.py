@@ -1,6 +1,7 @@
 import datetime as dt
 from pathlib import Path
 from typing import Optional
+from config import config
 
 
 class Person:
@@ -22,6 +23,11 @@ class Person:
         if video is not None and not video.exists():
             raise ValueError(f'file {video} does not exist')
         self.video = video
+
+        if image is None:
+            self.image = config.get_default_image()
+        if video is None:
+            self.video = config.get_default_video()
 
     def get_firstname(self) -> str:
         return self.firstname
