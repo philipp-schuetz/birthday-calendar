@@ -10,7 +10,7 @@ class Config:
         # path to config file
         self.path = Path('config.json')
 
-        self.valid_output_method = ['html']
+        self.valid_output_method = ['html', 'video']
         self.allowed_image_suffixes = ['.png', '.jpg', '.jpeg']
         self.allowed_video_suffixes = ['.mp4']
 
