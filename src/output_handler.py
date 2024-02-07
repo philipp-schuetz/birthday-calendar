@@ -1,4 +1,5 @@
 from html_output import HtmlOutput
+from video_output import VideoOutput
 import custom_types as ct
 import datetime as dt
 import time
@@ -21,3 +22,6 @@ def start_output(data: list[ct.Person]):
                 if new != today:
                     return
                 time.sleep(60)
+        case 'video':
+            video = VideoOutput(data)
+            video.start_video()
