@@ -1,7 +1,4 @@
-import webbrowser
 from pathlib import Path
-import html_css
-import html_templates
 import custom_types as ct
 import os
 from config import config
@@ -15,12 +12,8 @@ class VideoOutput:
 
         self.cap = cv2.VideoCapture(str(self.video_file))
 
-    def add_text_overlay(self, frame, text, position=(50, 50), font_scale=1, font_thickness=2,
-                         text_color=(255, 255, 255)):
-        cv2.putText(frame, text, position, cv2.FONT_HERSHEY_SIMPLEX, font_scale, text_color, font_thickness)
-
     def start_video(self):
-        video = cv2.VideoCapture('test.mp4')
+        video = cv2.VideoCapture(self.video_file.name)
 
         fps = video.get(cv2.CAP_PROP_FPS)
 
@@ -33,10 +26,22 @@ class VideoOutput:
             ret, frame = video.read()
 
             if not ret:
-                video = cv2.VideoCapture('test.mp4')
+                video = cv2.VideoCapture(self.video_file.name)
                 continue
 
-            cv2.putText(frame, 'Text', (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
+            text_pos = [20, 20]
+            font_scale = 1
+            spacing = 25
+            text_color = (255, 255, 255)
+            thickness = 2
+            for person in self.data:
+                text_pos[1] += spacing * font_scale
+                if config.get_lastname_only():
+                    text = f'{config.get_address_terms()[person.get_gender()]} {person.get_lastname()}'
+                else:
+                    text = f'{person.get_firstname()} {person.get_lastname()}'
+                cv2.putText(
+                    frame, text, text_pos, cv2.FONT_HERSHEY_SIMPLEX, font_scale, text_color, thickness, cv2.LINE_AA)
 
             cv2.imshow('video', frame)
 
