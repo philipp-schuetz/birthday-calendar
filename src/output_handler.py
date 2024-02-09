@@ -6,6 +6,7 @@ import custom_types as ct
 import datetime as dt
 import time
 from config import config
+import sys
 
 output_type = config.get_output_method()
 
@@ -36,5 +37,10 @@ def start_output(data: list[ct.Person]):
             while True:
                 video.play_frame()
                 if cv2.waitKey(video.frame_delay) & 0xFF == ord('q'):
+                    full_quit = True
                     break
+                if new_day(today):
+                    return
             video.stop_video()
+            if full_quit:
+                sys.exit()
