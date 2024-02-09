@@ -1,4 +1,4 @@
-/*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
+css = """/*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
 
 /* Document
    ========================================================================== */
@@ -349,3 +349,42 @@ template {
 [hidden] {
 	display: none;
 }
+
+
+
+
+:root {
+	--black: rgb(18, 18, 18);
+	--gray: rgb(32, 32, 32);
+	--white: rgb(180, 160, 140);
+	--margin: 25vw;
+	--font-size: 20px;
+	background-color: var(--black);
+	/* padding-top: 128px; */
+}
+
+body {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+}
+
+img {
+	width: 256px;
+}
+
+video {
+	width: 256px;
+}
+
+.person {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: 32px;
+	color: var(--white);
+	font-size: var(--font-size);
+	background-color: var(--gray);
+	padding: 20px;
+}
+"""
