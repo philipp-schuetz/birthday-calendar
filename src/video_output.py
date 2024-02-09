@@ -1,8 +1,7 @@
-from pathlib import Path
 import custom_types as ct
-import os
 from config import config
 import cv2
+import sys
 
 
 class VideoOutput:
@@ -29,19 +28,20 @@ class VideoOutput:
                 video = cv2.VideoCapture(self.video_file.name)
                 continue
 
-            text_pos = [20, 20]
-            font_scale = 1
-            spacing = 25
-            text_color = (255, 255, 255)
-            thickness = 2
+            text_start_pos = config.get_video_output_text_start_pos()
+            font_scale = config.get_video_output_font_scale()
+            spacing_y = config.get_video_output_text_spacing_y()
+            text_color = config.get_video_output_text_color()
+            thickness = config.get_video_output_text_thickness()
             for person in self.data:
-                text_pos[1] += spacing * font_scale
+                text_start_pos[1] += spacing_y
                 if config.get_lastname_only():
                     text = f'{config.get_address_terms()[person.get_gender()]} {person.get_lastname()}'
                 else:
                     text = f'{person.get_firstname()} {person.get_lastname()}'
                 cv2.putText(
-                    frame, text, text_pos, cv2.FONT_HERSHEY_SIMPLEX, font_scale, text_color, thickness, cv2.LINE_AA)
+                    frame, text, text_start_pos, cv2.FONT_HERSHEY_SIMPLEX, font_scale, text_color, thickness,
+                    cv2.LINE_AA)
 
             cv2.imshow('video', frame)
 
