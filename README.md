@@ -1,60 +1,133 @@
-# birtday calendar
+# Birthday Calendar
+Display current birthdays. Possible output methods are a html site inside a browser window or a video.
+The html page displays the name and optionally a picture and/or a video. The second output method prints out the names
+to the screen and plays the video on loop in the background. 
 
-## what it does and how it works
+## How to use
+Get the executable for your system from the latest [release](https://github.com/philipp-schuetz/birthday-calendar/releases/latest).
+If you don't want to use the executable, you can run the program with python. 
+```bash
+pip install -r requirements.txt
+python src/main.py
+```
+Input your birthdays using a `.csv` or `.json` file ([more info](#input)).
+Videos need to be in the .mp4 format and images in `.png`, `.jpg` or `.jpeg` format. The video's sound is muted on playback. 
+Put all files you want to use with the program in the same directory as the executable.
+To change the output method or further customize your experience, edit `config.json` ([more info](#configuration)). The file is created on first start.
 
-- displays information about a person whose birthday is today, on a browser page
-- the elements used for the page generation are defined in templates.py
-- the browser page is generated at launch of main.py and on a new day
-- the browser page is refreshes every minute
+## Input
+There are two input methods to choose from, `.csv` and `.json`. The input file using `.json` is more readable but a lot 
+longer than the file using `.csv`. The fields for `firstname`, `lastname`, `gender` and `birthdate` are required. The 
+fields for `image` and `video` are optional. Here are examples for both input methods:
+```json
+[
+  {
+    "firstname": "Abraham",
+    "lastname": "Abel",
+    "gender": "m",
+    "birthdate": "2000-01-11",
+    "image": "example.png",
+    "video": "example.mp4"
+  },
+  {
+    "firstname": "Beate",
+    "lastname": "Bommel",
+    "gender": "f",
+    "birthdate": "2001-01-12"
+  }
+]
+```
+```csv
+Abraham,Abel,m,2000-01-11,example.png,example.mp4,
+Beate,Bommel,f,2001-01-12,example.mp4,
+Conrad,Cicero,n,2002-02-13,example.jpg,
+Diether,Dathe,n,2003-03-14,
+Ellie,Ecker,f,2004-02-02,
+```
 
-## input data
+## Configuration
+The default config generated on first start.
+```json
+{
+  "input_file": "input.json",
+  "output_method": "html",
+  "lastname_only": false,
+  "address_terms": {
+    "m": "Mr.",
+    "f": "Ms.",
+    "n": "Mx."
+  },
+  "default": {
+    "image": "example.png",
+    "video": "example.mp4"
+  },
+  "video_output": {
+    "text_start_pos": [20, 20],
+    "text_color": [255, 255, 255],
+    "font_scale": 1.0,
+    "text_spacing_y": 25,
+    "text_thickness": 2
+  },
+  "output_time": {
+    "start": "00:00",
+    "end": "23:59"
+  }
+}
+```
+### Input file
+Use either a `.csv` or `.json` file as an input.
+```json
+"input_file": "input.json"
+```
+### Output method
+Choose between `html` and `video` as the output method.
+```json
+"output_method": "html"
+```
+### Lastname only mode
+If `lastname_only` is set to `true`, only the last name of each person will be displayed.
+`address_terms` then defined the terms used to address the person.
+```json
+"lastname_only": false,
+"address_terms": {
+  "m": "Mr.",
+  "f": "Ms.",
+  "n": "Mx."
+}
+```
+### Default image and video
+If no image or video is found for a person, the default image and video will be used.
+```json
+"default": {
+  "image": "example.png",
+  "video": "example.mp4"
+}
+```
+### Video output
+This section is used for customizing the `video` output method.
+`text_start_pos` defines the xy position of the first line of text.
+`text_color` defines the color of the text in RGB.
+`font_scale` defines the size of the font.
+`text_spacing_y` defines the vertical spacing between the lines of text.
+`text_thickness` defines the thickness of the letters.
+```json
+"video_output": {
+  "text_start_pos": [20, 20],
+  "text_color": [255, 255, 255],
+  "font_scale": 1.0,
+  "text_spacing_y": 25,
+  "text_thickness": 2
+}
+```
 
-- input data must be in a .csv file, formatted like example.csv, at the root of the project and named input.csv
-- videos can only be in .mp4 format, sound is muted on execution to use autoplay
-- image files can have the .png, .jpg or .jpeg extension
-- files referenced in the input file must be at the root of the project
-- values lastname, firstname, birthdate and gender are required
+### Output time
+`start` and `end` define the time range in which the output is displayed.
+```json
+"output_time": {
+  "start": "00:00",
+  "end": "23:59"
+}
+```
 
-## if you don't have python installed
-
-- get the executable for your system (supported are Windows and MacOS) from the latest [release](https://github.com/philipp-schuetz/birthday-calendar/releases/latest)
-- copy the executable into the /src directory of this project
-- run the executable instead of main.py
-
-## start this app on login
-
-### windows
-
-- copy the windows executable from the latest release into the /src directory
-- create a task in the windows task scheduler
-  - set the task to execute on startup
-  - add main.exe as program to execute
-  - set the working directory to the project root
-
-## program description (german only) up to date for v1.0.2
-Der Geburtstagskalendar (birthday calendar) soll täglich aktuelle Geburtstage mit
-Zusatzinformationen zu der betreffenden Person auf dem Bildschirm darstellen. Die
-Darstellung erfolgt in einem Browserfenster, präferiert wird dabei der Browser
-Mozilla Firefox. Dabei wird von dem Programm (kompilierte Version für MacOS und
-Windows unter "/dist") einmal beim Start und danach täglich um ca. 00:00 Uhr eine
-HTML-Datei nach definierten Vorlagen (templates.py) generiert, die dann
-anschließend im Browser angezeigt wird. Für die Generierung der HTML-Datei wird
-zu erst eine .csv Datei mit dem Namen "input.csv" (Beispiel: example.csv), die die
-Geburtstage und weiteren Daten zu den jeweiligen Personen enthält, importiert. In
-die Darstellung können auch Bilder oder Videos eingebunden werden. Videos sind
-im Format .mp4 erlaubt und Bilder in den Formaten .png, .jpg und .jpeg. Diese
-Dateien müssen sich im gleichen Ordner, wie das Programm befinden. Die, in der
-input.csv angegebenen Daten müssen Vorname, Nachname, Geburtsdatum und
-Geschlecht enthalten, alles Weitere ist optional. Anschließend werden die Daten auf
-Richtigkeit bzw. die richtige Formatierung überprüft (Datum: 01.01.2000; Geschlecht:m, w, n; Dateien müssen existieren). Danach werden alle Daten für die weitere
-Verwendung im Programm formatiert und unter Verwendung der Vorlagen in die
-HTML-Datei geschrieben. Nach Vollendung der Generierung öffnet sich das
-Browserfenster automatisch und aktualisiert sich minütlich, um die Veränderungen
-der HTML-Datei darzustellen. Die Aktualisierung des Fensters könnte auch
-ausschließlich um 00:00 Uhr erfolgen, dazu müsste jedoch JavaScript eingesetzt
-werden, was eine weitere nicht unbedigt notwendige Komponente bedeuten würde.
-Das Programm kann ohne Administratorrechte ausgeführt werden, deshalb muss
-dieses durch den Nutzer in den Automatischen Start des Betriebssystems abgelegt
-werden, wenn es nach einem Systemneustart automatich ausgeführt werden soll.
-Eine nähere Beschreibung der verwendeten Strukturen lässt sich in Form von
-Kommentaren im Quelltext des Projekts wiederfinden.
+## License
+Licensed under the [GPL-3.0](https://github.com/philipp-schuetz/birthday-calendar/blob/main/LICENSE) license.
