@@ -1,3 +1,5 @@
+import cv2
+
 from html_output import HtmlOutput
 from video_output import VideoOutput
 import custom_types as ct
@@ -30,4 +32,9 @@ def start_output(data: list[ct.Person]):
                 time.sleep(60)
         case 'video':
             video = VideoOutput(data)
-            video.start_video()
+
+            while True:
+                video.play_frame()
+                if cv2.waitKey(video.frame_delay) & 0xFF == ord('q'):
+                    break
+            video.stop_video()
