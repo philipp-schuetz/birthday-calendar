@@ -28,8 +28,8 @@ class Config:
                 "image": "example.png",
                 "video": "example.mp4"
             },
-            "video_output": {  # TODO text size and position?
-                "text_color": "white",
+            "video_output": {
+                "text_color": (255, 255, 255),
             }
         }
 
@@ -98,12 +98,12 @@ class Config:
             raise ValueError(f'{value} is not a valid default video file')
         return Path(value)
 
-    def get_video_output_text_colors(self) -> str:
+    def get_video_output_text_color(self) -> tuple:
         value = self.config['video_output']['text_color']
-        allowed_colors = ['red', 'green', 'blue', 'white']
-        if not isinstance(value, str) or value not in allowed_colors:
-            raise ValueError(f'{value} color')
-        return value
+        for rgb in value:
+            if not isinstance(rgb, int) or rgb < 0 or rgb > 255:
+                raise ValueError(f'{value} is not a valid color')
+        return tuple(value)
 
 
 config = Config()
