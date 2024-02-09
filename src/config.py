@@ -1,6 +1,7 @@
 """holds the default configuration and methods to interact with the config file"""
 import json
 from pathlib import Path
+import datetime as dt
 
 
 class Config:
@@ -34,6 +35,10 @@ class Config:
                 "font_scale": 1.0,
                 "text_spacing_y": 25,
                 "text_thickness": 2
+            },
+            "output_time": {
+                "start": "00:00",
+                "end": "23:59"
             }
         }
 
@@ -133,6 +138,17 @@ class Config:
         if not isinstance(value, int) or value < 0:
             raise ValueError(f'{value} is not a valid text thickness')
         return value
+
+    def get_output_time(self) -> dict[str, dt.time]:
+        start = self.config['output_time']['start']
+        end = self.config['output_time']['end']
+        if not isinstance(start, str) or not isinstance(end, str):
+            raise ValueError(f'{start} or {end} is not a valid time')
+
+        return {
+            'start': dt.time.fromisoformat(start),
+            'end': dt.time.fromisoformat(end)
+        }
 
 
 config = Config()
