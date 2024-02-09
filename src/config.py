@@ -29,7 +29,11 @@ class Config:
                 "video": "example.mp4"
             },
             "video_output": {
+                "text_start_pos": [20, 20],
                 "text_color": (255, 255, 255),
+                "font_scale": 1.0,
+                "text_spacing_y": 25,
+                "text_thickness": 2
             }
         }
 
@@ -104,6 +108,31 @@ class Config:
             if not isinstance(rgb, int) or rgb < 0 or rgb > 255:
                 raise ValueError(f'{value} is not a valid color')
         return tuple(value)
+
+    def get_video_output_text_start_pos(self) -> list:
+        value = self.config['video_output']['text_start_pos']
+        for pos in value:
+            if not isinstance(pos, int) or pos < 0:
+                raise ValueError(f'{value} is not a valid position')
+        return value
+
+    def get_video_output_font_scale(self) -> float:
+        value = self.config['video_output']['font_scale']
+        if not isinstance(value, float) or value < 0:
+            raise ValueError(f'{value} is not a valid font scale')
+        return value
+
+    def get_video_output_text_spacing_y(self) -> int:
+        value = self.config['video_output']['text_spacing_y']
+        if not isinstance(value, int) or value < 0:
+            raise ValueError(f'{value} is not a valid text spacing y value')
+        return value
+
+    def get_video_output_text_thickness(self) -> int:
+        value = self.config['video_output']['text_thickness']
+        if not isinstance(value, int) or value < 0:
+            raise ValueError(f'{value} is not a valid text thickness')
+        return value
 
 
 config = Config()
