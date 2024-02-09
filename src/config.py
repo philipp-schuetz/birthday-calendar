@@ -1,6 +1,7 @@
 """holds the default configuration and methods to interact with the config file"""
 import json
 from pathlib import Path
+import datetime as dt
 
 
 class Config:
@@ -10,7 +11,7 @@ class Config:
         # path to config file
         self.path = Path('config.json')
 
-        self.valid_output_method = ['html']
+        self.valid_output_method = ['html', 'video']
         self.allowed_image_suffixes = ['.png', '.jpg', '.jpeg']
         self.allowed_video_suffixes = ['.mp4']
 
@@ -27,6 +28,17 @@ class Config:
             "default": {
                 "image": "example.png",
                 "video": "example.mp4"
+            },
+            "video_output": {
+                "text_start_pos": [20, 20],
+                "text_color": (255, 255, 255),
+                "font_scale": 1.0,
+                "text_spacing_y": 25,
+                "text_thickness": 2
+            },
+            "output_time": {
+                "start": "00:00",
+                "end": "23:59"
             }
         }
 
@@ -94,6 +106,49 @@ class Config:
         if not isinstance(value, str) or not Path(value).is_file():
             raise ValueError(f'{value} is not a valid default video file')
         return Path(value)
+
+    def get_video_output_text_color(self) -> tuple:
+        value = self.config['video_output']['text_color']
+        for rgb in value:
+            if not isinstance(rgb, int) or rgb < 0 or rgb > 255:
+                raise ValueError(f'{value} is not a valid color')
+        return tuple(value)
+
+    def get_video_output_text_start_pos(self) -> list:
+        value = self.config['video_output']['text_start_pos']
+        for pos in value:
+            if not isinstance(pos, int) or pos < 0:
+                raise ValueError(f'{value} is not a valid position')
+        return value
+
+    def get_video_output_font_scale(self) -> float:
+        value = self.config['video_output']['font_scale']
+        if not isinstance(value, float) or value < 0:
+            raise ValueError(f'{value} is not a valid font scale')
+        return value
+
+    def get_video_output_text_spacing_y(self) -> int:
+        value = self.config['video_output']['text_spacing_y']
+        if not isinstance(value, int) or value < 0:
+            raise ValueError(f'{value} is not a valid text spacing y value')
+        return value
+
+    def get_video_output_text_thickness(self) -> int:
+        value = self.config['video_output']['text_thickness']
+        if not isinstance(value, int) or value < 0:
+            raise ValueError(f'{value} is not a valid text thickness')
+        return value
+
+    def get_output_time(self) -> dict[str, dt.time]:
+        start = self.config['output_time']['start']
+        end = self.config['output_time']['end']
+        if not isinstance(start, str) or not isinstance(end, str):
+            raise ValueError(f'{start} or {end} is not a valid time')
+
+        return {
+            'start': dt.time.fromisoformat(start),
+            'end': dt.time.fromisoformat(end)
+        }
 
 
 config = Config()

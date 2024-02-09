@@ -1,3 +1,11 @@
 __pycache__
 .vscode
 build
+dist
+birthday.html
+style.css
+config.json
+*.mp4
+*.png
+input.*
+test.*
