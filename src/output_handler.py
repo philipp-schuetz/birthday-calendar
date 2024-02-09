@@ -8,18 +8,24 @@ from config import config
 output_type = config.get_output_method()
 
 
+def new_day(today: dt.date) -> bool:
+    """check if the current date is a new date"""
+    new = dt.date.today()
+    if new != today:
+        return True
+    return False
+
+
 def start_output(data: list[ct.Person]):
     """takes the person data and runs the configured output, return on new date"""
+    today = dt.date.today()
     match output_type:
         case 'html':
-            today = dt.date.today()
             html = HtmlOutput(data)
             html.generate_page()
             html.open_web()
             while True:
-                # check if the current date is a new date
-                new = dt.date.today()
-                if new != today:
+                if new_day(today):
                     return
                 time.sleep(60)
         case 'video':
