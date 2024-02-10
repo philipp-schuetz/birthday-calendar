@@ -35,33 +35,3 @@ jobs:
         with:
           name: birthday-calendar_windows
           path: "./birthday-calendar_windows.zip"
-
-  macos-build:
-    name: Build executable for MacOS
-
-    runs-on: macos-latest
-
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.10'
-          architecture: 'x64'
-      - run: pip install pyinstaller
-
-      - name: Install project dependencies
-        run: pip install -r requirements.txt
-
-      - name: Build Package
-        run: |
-          pyinstaller src/main.py --name birthday-calendar --onefile --clean --noconsole
-
-      - name: Archive Package
-        run: |
-          zip -r "birthday-calendar_macos.zip" ./dist
-
-      - name: Upload Package
-        uses: actions/upload-artifact@v4
-        with:
-          name: birthday-calendar_macos
-          path: "./birthday-calendar_macos.zip"
