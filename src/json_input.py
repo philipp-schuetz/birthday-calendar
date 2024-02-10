@@ -27,9 +27,10 @@ class JsonInput:
                 video = None
                 if 'video' in person:
                     video = Path(person['video'])
-                person_list.append(
-                    ct.Person(firstname=firstname, lastname=lastname, gender=gender,
-                              birthdate=birthdate, image=image,
-                              video=video))
+                if utils.birthdate_today(birthdate):
+                    person_list.append(
+                        ct.Person(firstname=firstname, lastname=lastname, gender=gender,
+                                  birthdate=birthdate, image=image,
+                                  video=video))
 
         return person_list
