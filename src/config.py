@@ -95,13 +95,17 @@ class Config:
                 raise ValueError(f'address terms can only contain m/f/n')
         return value
 
-    def get_default_image(self) -> Path:
+    def get_default_image(self) -> Path | None:
+        if 'image' not in self.config['default']:
+            return None
         value = self.config['default']['image']
         if not isinstance(value, str) or not Path(value).is_file():
             raise ValueError(f'{value} is not a valid default image file')
         return Path(value)
 
-    def get_default_video(self) -> Path:
+    def get_default_video(self) -> Path | None:
+        if 'video' not in self.config['default']:
+            return None
         value = self.config['default']['video']
         if not isinstance(value, str) or not Path(value).is_file():
             raise ValueError(f'{value} is not a valid default video file')
