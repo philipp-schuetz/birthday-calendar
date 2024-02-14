@@ -14,6 +14,7 @@ Input your birthdays using a `.csv` or `.json` file ([more info](#input)).
 Videos need to be in the .mp4 format and images in `.png`, `.jpg` or `.jpeg` format. The video's sound is muted on playback. 
 Put all files you want to use with the program in the same directory as the executable.
 To change the output method or further customize your experience, edit `config.json` ([more info](#configuration)). The file is created on first start.
+If you use `video` as the output method, you can quit the program by pressing `q` during video playback.
 
 ## Input
 There are two input methods to choose from, `.csv` and `.json`. The input file using `.json` is more readable but a lot 
