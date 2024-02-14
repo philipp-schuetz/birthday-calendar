@@ -24,7 +24,7 @@ class Person:
             raise ValueError(f'file {video} does not exist')
         self.video = video
 
-        if image is None and config.get_output_method() != 'video':
+        if image is None:
             self.image = config.get_default_image()
         if video is None:
             self.video = config.get_default_video()
