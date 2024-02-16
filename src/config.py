@@ -25,6 +25,7 @@ class Config:
                 "f": "Ms.",
                 "n": "Mx."
             },
+            "no_birthday_text": "No birthday today",
             "default": {
                 "image": "example.png",
                 "video": "example.mp4"
@@ -93,6 +94,12 @@ class Config:
                 raise ValueError(f'address terms must be a strings')
             if key not in ['m', 'f', 'n']:
                 raise ValueError(f'address terms can only contain m/f/n')
+        return value
+
+    def get_no_birthday_text(self) -> str:
+        value = self.config['no_birthday_text']
+        if not isinstance(value, str):
+            raise ValueError(f'no_birthday_text must be a string')
         return value
 
     def get_default_image(self) -> Path | None:
