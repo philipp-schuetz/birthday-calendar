@@ -46,6 +46,8 @@ class HtmlOutput:
             else:
                 # write templates for the case that no birthday exists on the current date
                 file.write(html_templates.person_open)
-                file.write(html_templates.no_bd)
+                file.write(html_templates.no_bd_open)
+                file.write(config.get_no_birthday_text())
+                file.write(html_templates.no_bd_close)
                 file.write(html_templates.person_close)
             file.write(html_templates.bottom)

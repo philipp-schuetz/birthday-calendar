@@ -13,7 +13,8 @@ top = """<!DOCTYPE html>
 
 person_open = '<div class="person">'
 
-no_bd = '<h1>There is no birthday today.</h1>\n'
+no_bd_open = '<h1>'
+no_bd_close = '</h1>\n'
 
 name = '<h1>{firstname} {lastname}</h1>\n'
 
