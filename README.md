@@ -58,6 +58,7 @@ The default config generated on first start.
     "f": "Ms.",
     "n": "Mx."
   },
+  "no_birthday_text": "No birthday today",
   "default": {
     "image": "example.png",
     "video": "example.mp4"
@@ -95,6 +96,11 @@ If `lastname_only` is set to `true`, only the last name of each person will be d
   "f": "Ms.",
   "n": "Mx."
 }
+```
+### No birthday text
+If no birthday is found for the current date, the `no_birthday_text` will be displayed.
+```json
+"no_birthday_text": "No birthday today"
 ```
 ### Default image and video
 If no image or video is found for a person, the default image and video will be used.
