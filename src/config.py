@@ -17,6 +17,7 @@ class Config:
 
         # default configuration
         self.default = {
+            "version": "2.1.0",
             "input_file": "input.json",
             "output_method": "html",
             "lastname_only": False,
@@ -60,6 +61,9 @@ class Config:
         """load config dictionary from file"""
         with open(self.path, 'r', encoding='UTF-8') as file:
             self.config = json.load(file)
+            if "version" not in self.config.keys() or self.config['version'] != self.default['version']:
+                self.update_outdated_config()
+                return
             for key in self.default.keys():
                 if key not in self.config.keys():
                     raise ValueError(f'Key {key} not found in config file')
@@ -68,6 +72,14 @@ class Config:
         """save config dictionary to file"""
         with open(self.path, 'w', encoding='UTF-8') as file:
             json.dump(self.config, file)
+
+    def update_outdated_config(self):
+        """update outdated config file"""
+        for key, value in self.default.items():
+            if key not in self.config:
+                self.config[key] = value
+        self.save()
+        self.load()
 
     def get_input_file(self) -> Path:
         value = self.config['input_file']
