@@ -20,6 +20,7 @@ If you use `video` as the output method, you can quit the program by pressing `q
 There are two input methods to choose from, `.csv` and `.json`. The input file using `.json` is more readable but a lot 
 longer than the file using `.csv`. The fields for `firstname`, `lastname`, `gender` and `birthdate` are required. The 
 fields for `image` and `video` are optional. Here are examples for both input methods:
+### JSON
 ```json
 [
   {
@@ -38,6 +39,7 @@ fields for `image` and `video` are optional. Here are examples for both input me
   }
 ]
 ```
+### CSV
 ```csv
 Abraham,Abel,m,2000-01-11,example.png,example.mp4,
 Beate,Bommel,f,2001-01-12,example.mp4,
