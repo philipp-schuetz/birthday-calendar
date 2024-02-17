@@ -17,6 +17,7 @@ class Config:
 
         # default configuration
         self.default = {
+            "version": "2.1.0",
             "input_file": "input.json",
             "output_method": "html",
             "lastname_only": False,
@@ -25,6 +26,7 @@ class Config:
                 "f": "Ms.",
                 "n": "Mx."
             },
+            "no_birthday_text": "No birthday today",
             "default": {
                 "image": "example.png",
                 "video": "example.mp4"
@@ -59,6 +61,9 @@ class Config:
         """load config dictionary from file"""
         with open(self.path, 'r', encoding='UTF-8') as file:
             self.config = json.load(file)
+            if "version" not in self.config.keys() or self.config['version'] != self.default['version']:
+                self.update_outdated_config()
+                return
             for key in self.default.keys():
                 if key not in self.config.keys():
                     raise ValueError(f'Key {key} not found in config file')
@@ -67,6 +72,14 @@ class Config:
         """save config dictionary to file"""
         with open(self.path, 'w', encoding='UTF-8') as file:
             json.dump(self.config, file)
+
+    def update_outdated_config(self):
+        """update outdated config file"""
+        for key, value in self.default.items():
+            if key not in self.config:
+                self.config[key] = value
+        self.save()
+        self.load()
 
     def get_input_file(self) -> Path:
         value = self.config['input_file']
@@ -95,13 +108,23 @@ class Config:
                 raise ValueError(f'address terms can only contain m/f/n')
         return value
 
-    def get_default_image(self) -> Path:
+    def get_no_birthday_text(self) -> str:
+        value = self.config['no_birthday_text']
+        if not isinstance(value, str):
+            raise ValueError(f'no_birthday_text must be a string')
+        return value
+
+    def get_default_image(self) -> Path | None:
+        if 'image' not in self.config['default']:
+            return None
         value = self.config['default']['image']
         if not isinstance(value, str) or not Path(value).is_file():
             raise ValueError(f'{value} is not a valid default image file')
         return Path(value)
 
-    def get_default_video(self) -> Path:
+    def get_default_video(self) -> Path | None:
+        if 'video' not in self.config['default']:
+            return None
         value = self.config['default']['video']
         if not isinstance(value, str) or not Path(value).is_file():
             raise ValueError(f'{value} is not a valid default video file')

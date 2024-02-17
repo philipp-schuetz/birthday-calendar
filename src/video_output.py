@@ -24,15 +24,20 @@ class VideoOutput:
         text_color = config.get_video_output_text_color()
         thickness = config.get_video_output_text_thickness()
 
-        for person in self.data:
-            text_start_pos[1] += spacing_y
-            if config.get_lastname_only():
-                text = f'{config.get_address_terms()[person.get_gender()]} {person.get_lastname()}'
-            else:
-                text = f'{person.get_firstname()} {person.get_lastname()}'
+        if self.data:
+            for person in self.data:
+                text_start_pos[1] += spacing_y
+                if config.get_lastname_only():
+                    text = f'{config.get_address_terms()[person.get_gender()]} {person.get_lastname()}'
+                else:
+                    text = f'{person.get_firstname()} {person.get_lastname()}'
+                cv2.putText(
+                    frame, text, text_start_pos, cv2.FONT_HERSHEY_SIMPLEX, font_scale, text_color, thickness,
+                    cv2.LINE_AA)
+        else:
             cv2.putText(
-                frame, text, text_start_pos, cv2.FONT_HERSHEY_SIMPLEX, font_scale, text_color, thickness,
-                cv2.LINE_AA)
+                frame, config.get_no_birthday_text(), text_start_pos, cv2.FONT_HERSHEY_SIMPLEX, font_scale, text_color,
+                thickness, cv2.LINE_AA)
 
     def play_frame(self):
         ret, frame = self.cv2_video.read()
